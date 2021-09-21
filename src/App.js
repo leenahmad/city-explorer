@@ -68,10 +68,10 @@ class App extends React.Component {
             <h4>longitude: {this.state.locationResult.lon} </h4>
             
            
-              {this.state.weatherResult.map (data =>{
+              {this.state.weatherResult.map ( (data,i) =>{
                 return(
                   // eslint-disable-next-line no-sequences
-                  <Result leen = {data} 
+                  <Result key = {i} weather = {data} 
                   />
                 )
               })}
