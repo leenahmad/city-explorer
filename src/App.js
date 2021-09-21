@@ -14,7 +14,7 @@ class App extends React.Component {
   }
 
   gitWeather = async(cityName) =>{
-    let weatherURL = `http://localhost:3001/weather?searchQuert=${cityName}`
+    let weatherURL = `${process.env.REACT_APP_LOCATIONIQ_SERVER}/weather?searchQuert=${cityName}`
     let weatherResult = await axios.get(weatherURL)
     console.log(weatherResult.data)
     this.setState({
