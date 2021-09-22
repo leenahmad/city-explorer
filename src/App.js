@@ -2,6 +2,12 @@ import React from "react";
 import axios from "axios";
 import Result from "./components/Result";
 import Movie from "./components/Movie";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Form from "react-bootstrap/Form";
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container";
+import { Card } from "react-bootstrap";
+import Image from 'react-bootstrap/Image'
 
 class App extends React.Component {
   constructor(props) {
@@ -15,34 +21,31 @@ class App extends React.Component {
     };
   }
 
-  
-
   getLocFun = async (e) => {
     e.preventDefault();
     console.log("inside getLocFun");
 
-    // let cityName = e.target.city.value;
-    await this.setState({
+     await this.setState({
       searchQuery: e.target.city.value,
-    });
+    })
 
     console.log("LEEN");
 
     let reqUrl = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&q=${this.state.searchQuery}&format=json`;
 
     let locResult = await axios.get(reqUrl);
-    console.log('aaaaaaaaaaa', locResult);
-    console.log('bbbbbbbb', locResult.data);
-    console.log('cccccccc', locResult.data[0]);
+    console.log("aaaaaaaaaaa", locResult);
+    console.log("bbbbbbbb", locResult.data);
+    console.log("cccccccc", locResult.data[0]);
 
     this.setState({
       locationResult: locResult.data[0],
-     
+
       showLocInfo: true,
     });
 
     this.gitWeather(this.state.searchQuery);
-    this.gitMovies(this.state.searchQuery)
+    this.gitMovies(this.state.searchQuery);
   };
 
   gitWeather = async (city) => {
@@ -57,30 +60,38 @@ class App extends React.Component {
 
   gitMovies = async (city) => {
     let movieURL = `${process.env.REACT_APP_LOCATIONIQ_SERVER}/Movies?city=${city}`;
-    console.log(movieURL)
+    console.log(movieURL);
     let movieResult = await axios.get(movieURL);
     console.log(movieResult.data);
     this.setState({
-       movieResult: movieResult.data 
-      });
+      movieResult: movieResult.data,
+    });
   };
 
   render() {
     return (
       <div>
-        <h3>City Explorer app</h3>
+        <Navbar bg="secondary" variant="pink" style = {{"textAlign" :"center"}}> 
+          <Container>
+           <Navbar.Brand> <h1>City Explorer app</h1></Navbar.Brand>
+          </Container>
+        </Navbar>
         {/* <button onClick={this.getLocFun}>Get Location</button> */}
-        <form onSubmit={this.getLocFun} {...this.gitWeather}>
-          <input type="text" name="city" />
-          <input type="submit" value="get city info" />
-        </form>
+
+        <Form onSubmit={this.getLocFun}>
+          <Form.Control type="text" label="city name" />
+          <Form.Control type="submit" value="get city info" />
+        </Form>
 
         {this.state.showLocInfo && (
           <>
-            <h4>City name: {this.state.searchQuery}</h4>
-            <h4>latitude: {this.state.locationResult.lat}</h4>
-            <h4>longitude: {this.state.locationResult.lon} </h4>
-               
+            <Card>
+              <Card.Body style={{ teextAlign: "center" }}>
+                <h4>City name: {this.state.searchQuery}</h4>
+                <h4>latitude: {this.state.locationResult.lat}</h4>
+                <h4>longitude: {this.state.locationResult.lon} </h4>
+              </Card.Body>
+              {/* 
             {this.state.weatherResult.map((data, i) => {
               return (
                 // eslint-disable-next-line no-sequences
@@ -92,20 +103,26 @@ class App extends React.Component {
               return (
               <Movie key={i} movie={movie} />
               );
-            })}
-            
-            <img
-              src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&center=${this.state.locationResult.lat},${this.state.locationResult.lon}&zoom=10`}
-              alt="city"
-            />
+            })} */}
+
+              <Image src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&center=${this.state.locationResult.lat},${this.state.locationResult.lon}&zoom=10`} alt="city"/>
+            </Card>
           </>
         )}
-      
 
+        {this.state.weatherResult.map((data, i) => {
+          return (
+            // eslint-disable-next-line no-sequences
+            <Result key={i} weather={data} />
+          );
+        })}
+
+        {this.state.movieResult.map((movie, i) => {
+          return <Movie key={i} movie={movie} />;
+        })}
       </div>
     );
   }
 }
 
 export default App;
-
