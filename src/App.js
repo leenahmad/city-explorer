@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Result from './components/Result';
+import Movie from './components/Movie';
 // import Button from "react-bootstrap/Button";
 class App extends React.Component {
   constructor(props) {
@@ -10,16 +11,36 @@ class App extends React.Component {
       searchQuery: "",
       weatherResult: [],
       showLocInfo: false,
+      movies:[]
+     
     };
   }
 
-  gitWeather = async(cityName) =>{
-    let weatherURL = `${process.env.REACT_APP_LOCATIONIQ_SERVER}/weather?searchQuert=${cityName}`
+  gitWeather = async(city) =>{
+    let weatherURL = `${process.env.WEATHER_API_KEY}/weather?searchQuert=${city}`
     let weatherResult = await axios.get(weatherURL)
     console.log(weatherResult.data)
     this.setState({
       weatherResult : weatherResult.data
     })
+  }
+
+  gitMovies = async (city) =>{
+    let movieURL = `${process.env.MOVIE_API_KEY}/movie?searchQuert2=${city}`
+    let movieResult = await axios.get(movieURL)
+    console.log(movieResult.data)
+    this.setState({movieResult : movieResult.data})
+    // try{
+    //   const movie = await axios.get(`${process.env.MOVIE_API_KEY}/movie`,{params : {searchQuery : city}});
+    //   this.setState({
+    //     movies :  movie.data
+    //   })
+    //  }
+    // catch(ERROR){
+    //   this.setState({
+    //     ERROR: true
+    //   })
+    // }
   }
 
   getLocFun = async (e) => {
@@ -56,7 +77,8 @@ class App extends React.Component {
       <div>
         <h3>City Explorer app</h3>
         {/* <button onClick={this.getLocFun}>Get Location</button> */}
-        <form onSubmit={this.getLocFun} {...this.gitWeather}>
+        <form onSubmit={this.getLocFun} {...this.gitWeather} 
+        {...this.gitMovies}>
           <input type="text" name="city" />
           <input type="submit" value="get city info" />
         </form>
@@ -76,8 +98,11 @@ class App extends React.Component {
                 )
               })}
             
-            
-              
+            {this.state.movies.map((movie, i) => {
+              return(
+                <Movie key = {i} movie={movie}/>
+              )
+            })}
             
             <img
               src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&center=${this.state.locationResult.lat},${this.state.locationResult.lon}&zoom=10`}
