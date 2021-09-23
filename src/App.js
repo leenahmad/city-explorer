@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-import Result from "./components/Result";
-import Movie from "./components/Movie";
+import Result from "./components/weatherC";
+import Movie from "./components/Movies";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
