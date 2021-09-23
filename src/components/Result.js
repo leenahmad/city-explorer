@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
 import  Card  from 'react-bootstrap/Card';
 
 class Result extends Component{
@@ -6,6 +7,7 @@ class Result extends Component{
         return(
                 <div>
                     <Card style = {{"textAlign" : "center"}} >
+                        <h3>Weather</h3>
                         <Card.Body>
                       <p>Date : {this.props.weather.date} </p>
                       <p>description :{this.props.weather.description} </p>
