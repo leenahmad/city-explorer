@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
 import Card from 'react-bootstrap/Card'
 
 class Movies extends Component{
@@ -6,7 +7,7 @@ class Movies extends Component{
         return(
                 <div>
                     <Card style = {{"textAlign" : "center"}}> 
-
+                       <h3>Movie</h3>
                     <Card.Body>
                    <h4> title : {this.props.movie.title} </h4>
                    <h4> overview : {this.props.movie.overview} </h4>

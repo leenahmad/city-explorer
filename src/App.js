@@ -79,7 +79,7 @@ class App extends React.Component {
         {/* <button onClick={this.getLocFun}>Get Location</button> */}
 
         <Form onSubmit={this.getLocFun}>
-          <Form.Control type="text" label="city name" />
+          <Form.Control type="text" label="city name" name="city"/>
           <Form.Control type="submit" value="get city info" />
         </Form>
 
@@ -105,7 +105,7 @@ class App extends React.Component {
               );
             })} */}
 
-              <Image src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&center=${this.state.locationResult.lat},${this.state.locationResult.lon}&zoom=10`} alt="city"/>
+              <Image src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&center=${this.state.locationResult.lat},${this.state.locationResult.lon}&zoom=10`} alt="city" width="450px"/>
             </Card>
           </>
         )}
