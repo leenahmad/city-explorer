@@ -13,7 +13,7 @@ class Movies extends Component{
                    <h4> overview : {this.props.overview} </h4>
                    <h4> vote_average : {this.props.vote_average}</h4>
                    <h4> vote_count : {this.props.vote_count}</h4>
-                   <h4> poster_path : {this.props.poster_path}</h4>
+                   <img src ={this.props.poster_path} alt ="img" ></img>
                    <h4> popularity : {this.props.popularity}</h4>
                    <h4> release_date : {this.props.release_date}</h4>
                     </Card.Body>
